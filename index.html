@@ -1,205 +1,324 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>デイトレード収支管理</title>
 
-  <title>デイトレード収支管理</title>
+<style>
+* {
+  box-sizing: border-box;
+}
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #f4f6f8;
+  color: #222;
+}
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      color: #222;
-    }
+header {
+  background: #111827;
+  color: white;
+  padding: 28px 20px;
+  text-align: center;
+}
 
-    header {
-      background: #111827;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
+header h1 {
+  margin: 0;
+  font-size: 28px;
+}
 
-    header h1 {
-      margin: 0;
-      font-size: 26px;
-    }
+header p {
+  color: #cbd5e1;
+  margin-bottom: 0;
+}
 
-    header p {
-      margin: 8px 0 0;
-      color: #d1d5db;
-    }
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 18px;
+}
 
-    .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 16px;
-    }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
 
-    .summary {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-bottom: 20px;
-    }
+.card {
+  background: white;
+  border-radius: 20px;
+  padding: 22px;
+  margin-bottom: 18px;
+  box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+}
 
-    .card {
-      background: white;
-      border-radius: 12px;
-      padding: 16px;
-      text-align: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
+.stat {
+  text-align: center;
+}
 
-    .card h3 {
-      margin: 0 0 8px;
-      font-size: 14px;
-      color: #666;
-    }
+.stat-title {
+  color: #666;
+  font-weight: bold;
+}
 
-    .card strong {
-      font-size: 22px;
-    }
+.stat-number {
+  font-size: 34px;
+  font-weight: bold;
+  margin-top: 8px;
+}
 
-    .profit {
-      color: #e53935;
-    }
+.profit {
+  color: #e53935;
+}
 
-    .loss {
-      color: #1565c0;
-    }
+.loss {
+  color: #1976d2;
+}
 
-    .form-box {
-      background: white;
-      padding: 18px;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      margin-bottom: 20px;
-    }
+.green {
+  color: #00a65a;
+}
 
-    .form-box h2 {
-      margin-top: 0;
-    }
+h2 {
+  margin-top: 0;
+}
 
-    input, select, button {
-      width: 100%;
-      padding: 12px;
-      margin: 6px 0;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 16px;
-    }
+label {
+  display: block;
+  margin-top: 14px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
 
-    button {
-      background: #2563eb;
-      color: white;
-      border: none;
-      font-weight: bold;
-      cursor: pointer;
-    }
+input, select {
+  width: 100%;
+  padding: 13px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
 
-    button:active {
-      opacity: 0.8;
-    }
+button {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 13px;
+  margin-top: 18px;
+  background: #111827;
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-    .delete-btn {
-      background: #dc2626;
-      padding: 7px;
-      font-size: 13px;
-    }
+button:hover {
+  opacity: 0.9;
+}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    }
+.delete-btn {
+  width: auto;
+  padding: 7px 12px;
+  margin: 0;
+  background: #ef4444;
+  font-size: 13px;
+}
 
-    th, td {
-      padding: 10px;
-      border-bottom: 1px solid #eee;
-      text-align: center;
-      font-size: 14px;
-    }
+.stock {
+  border-left: 6px solid #ef4444;
+  background: #fff;
+  padding: 16px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+}
 
-    th {
-      background: #1f2937;
-      color: white;
-    }
+.stock-name {
+  font-size: 19px;
+  font-weight: bold;
+}
 
-    .table-wrap {
-      overflow-x: auto;
-    }
+.stock-info {
+  margin-top: 7px;
+  color: #555;
+}
 
-    @media (max-width: 600px) {
-      .summary {
-        grid-template-columns: 1fr;
-      }
+.rank {
+  display: inline-block;
+  background: #ef4444;
+  color: white;
+  padding: 4px 9px;
+  border-radius: 20px;
+  font-size: 13px;
+  margin-right: 6px;
+}
 
-      header h1 {
-        font-size: 22px;
-      }
-    }
-  </style>
+.badge {
+  display: inline-block;
+  background: #dcfce7;
+  color: #15803d;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 20px;
+  margin-top: 8px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+th, td {
+  padding: 10px 5px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+th {
+  color: #555;
+}
+
+.note {
+  font-size: 12px;
+  color: #777;
+  margin-top: 10px;
+}
+
+@media(max-width:600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  header h1 {
+    font-size: 25px;
+  }
+}
+</style>
 </head>
 
 <body>
 
 <header>
   <h1>📈 デイトレード収支管理</h1>
-  <p>毎日の利益・損失を簡単に記録</p>
+  <p>毎日の利益・損失・勝率・注目銘柄を管理</p>
 </header>
 
 <div class="container">
 
-  <div class="summary">
+  <!-- 成績 -->
+  <div class="grid">
 
-    <div class="card">
-      <h3>合計収支</h3>
-      <strong id="total">¥0</strong>
+    <div class="card stat">
+      <div class="stat-title">合計収支</div>
+      <div id="totalProfit" class="stat-number profit">¥0</div>
     </div>
 
-    <div class="card">
-      <h3>勝ち</h3>
-      <strong id="wins" class="profit">0回</strong>
+    <div class="card stat">
+      <div class="stat-title">勝率</div>
+      <div id="winRate" class="stat-number green">0%</div>
     </div>
 
-    <div class="card">
-      <h3>負け</h3>
-      <strong id="losses" class="loss">0回</strong>
+    <div class="card stat">
+      <div class="stat-title">勝ち</div>
+      <div id="wins" class="stat-number profit">0回</div>
+    </div>
+
+    <div class="card stat">
+      <div class="stat-title">負け</div>
+      <div id="losses" class="stat-number loss">0回</div>
     </div>
 
   </div>
 
-  <div class="form-box">
+
+  <!-- 注目銘柄 -->
+  <div class="card">
+
+    <h2>🏆 デイトレ注目銘柄</h2>
+
+    <div class="stock">
+      <div>
+        <span class="rank">1位</span>
+        <span class="stock-name">7203 トヨタ自動車</span>
+      </div>
+
+      <div class="stock-info">
+        出来高・値動きをチェック
+      </div>
+
+      <span class="badge">
+        🔥 注目候補
+      </span>
+    </div>
+
+
+    <div class="stock">
+      <div>
+        <span class="rank">2位</span>
+        <span class="stock-name">8306 三菱UFJ</span>
+      </div>
+
+      <div class="stock-info">
+        高出来高銘柄
+      </div>
+
+      <span class="badge">
+        👀 監視候補
+      </span>
+    </div>
+
+
+    <div class="stock">
+      <div>
+        <span class="rank">3位</span>
+        <span class="stock-name">9984 ソフトバンクG</span>
+      </div>
+
+      <div class="stock-info">
+        値動きの大きさをチェック
+      </div>
+
+      <span class="badge">
+        ⚡ デイトレ候補
+      </span>
+    </div>
+
+    <div class="note">
+      ※表示銘柄は売買を推奨するものではありません。
+      実際の株価・出来高・ニュースを確認して判断してください。
+    </div>
+
+  </div>
+
+
+  <!-- 取引登録 -->
+  <div class="card">
 
     <h2>取引を追加</h2>
 
+    <label>日付</label>
     <input type="date" id="date">
 
+    <label>銘柄コード</label>
     <input
       type="text"
-      id="stock"
-      placeholder="銘柄名・銘柄コード"
+      id="code"
+      placeholder="例：7203"
     >
 
+    <label>銘柄名</label>
+    <input
+      type="text"
+      id="stockName"
+      placeholder="例：トヨタ自動車"
+    >
+
+    <label>利益・損失</label>
     <input
       type="number"
-      id="amount"
-      placeholder="収支金額 例：5000 / -3000"
-    >
-
-    <input
-      type="text"
-      id="memo"
-      placeholder="メモ"
+      id="profit"
+      placeholder="例：5000 または -3000"
     >
 
     <button onclick="addTrade()">
@@ -208,166 +327,209 @@
 
   </div>
 
-  <div class="table-wrap">
 
-    <table>
+  <!-- 銘柄別 -->
+  <div class="card">
 
-      <thead>
-        <tr>
-          <th>日付</th>
-          <th>銘柄</th>
-          <th>収支</th>
-          <th>メモ</th>
-          <th>削除</th>
-        </tr>
-      </thead>
+    <h2>🏅 銘柄別成績</h2>
 
-      <tbody id="tradeList"></tbody>
+    <div id="stockRanking">
+      まだ取引データがありません
+    </div>
 
-    </table>
+  </div>
+
+
+  <!-- 履歴 -->
+  <div class="card">
+
+    <h2>取引履歴</h2>
+
+    <div style="overflow-x:auto">
+
+      <table>
+
+        <thead>
+          <tr>
+            <th>日付</th>
+            <th>銘柄</th>
+            <th>収支</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody id="history"></tbody>
+
+      </table>
+
+    </div>
+
+    <button
+      onclick="clearTrades()"
+      style="background:#777"
+    >
+      全履歴を削除
+    </button>
 
   </div>
 
 </div>
 
+
 <script>
 
-let trades = JSON.parse(
-  localStorage.getItem("daytradeData")
-) || [];
+let trades =
+JSON.parse(localStorage.getItem("dayTrades")) || [];
 
-document.getElementById("date").value =
-  new Date().toISOString().split("T")[0];
 
+/* 今日の日付 */
+
+const today =
+new Date().toISOString().split("T")[0];
+
+document.getElementById("date").value = today;
+
+
+/* 取引追加 */
 
 function addTrade() {
 
   const date =
     document.getElementById("date").value;
 
-  const stock =
-    document.getElementById("stock").value.trim();
+  const code =
+    document.getElementById("code").value.trim();
 
-  const amount =
-    Number(document.getElementById("amount").value);
+  const stockName =
+    document.getElementById("stockName").value.trim();
 
-  const memo =
-    document.getElementById("memo").value.trim();
+  const profit =
+    Number(document.getElementById("profit").value);
 
 
-  if (!date || !stock ||
-      document.getElementById("amount").value === "") {
+  if (!date) {
+    alert("日付を入力してください");
+    return;
+  }
 
-    alert("日付・銘柄・収支金額を入力してください。");
+  if (!code) {
+    alert("銘柄コードを入力してください");
+    return;
+  }
+
+  if (!stockName) {
+    alert("銘柄名を入力してください");
+    return;
+  }
+
+  if (
+    document.getElementById("profit").value === ""
+  ) {
+    alert("利益・損失を入力してください");
     return;
   }
 
 
   trades.push({
+
+    id: Date.now(),
     date: date,
-    stock: stock,
-    amount: amount,
-    memo: memo
+    code: code,
+    name: stockName,
+    profit: profit
+
   });
 
 
-  saveData();
+  saveTrades();
 
 
-  document.getElementById("stock").value = "";
-  document.getElementById("amount").value = "";
-  document.getElementById("memo").value = "";
+  document.getElementById("code").value = "";
+  document.getElementById("stockName").value = "";
+  document.getElementById("profit").value = "";
 
-
-  renderTrades();
 }
 
 
-function deleteTrade(index) {
+/* 保存 */
 
-  if (confirm("この取引を削除しますか？")) {
-
-    trades.splice(index, 1);
-
-    saveData();
-
-    renderTrades();
-  }
-}
-
-
-function saveData() {
+function saveTrades() {
 
   localStorage.setItem(
-    "daytradeData",
+    "dayTrades",
     JSON.stringify(trades)
   );
+
+  updateScreen();
+
 }
 
 
-function renderTrades() {
+/* 削除 */
 
-  const list =
-    document.getElementById("tradeList");
+function deleteTrade(id) {
 
-  list.innerHTML = "";
+  trades =
+    trades.filter(trade => trade.id !== id);
+
+  saveTrades();
+
+}
+
+
+/* 全削除 */
+
+function clearTrades() {
+
+  if (
+    confirm("すべての取引履歴を削除しますか？")
+  ) {
+
+    trades = [];
+
+    saveTrades();
+
+  }
+
+}
+
+
+/* 画面更新 */
+
+function updateScreen() {
 
   let total = 0;
   let wins = 0;
   let losses = 0;
 
 
-  trades.forEach((trade, index) => {
+  trades.forEach(trade => {
 
-    total += trade.amount;
+    total += trade.profit;
 
-    if (trade.amount > 0) {
+    if (trade.profit > 0) {
       wins++;
     }
 
-    if (trade.amount < 0) {
+    if (trade.profit < 0) {
       losses++;
     }
 
-
-    const row =
-      document.createElement("tr");
-
-
-    const amountClass =
-      trade.amount >= 0
-      ? "profit"
-      : "loss";
-
-
-    row.innerHTML = `
-      <td>${escapeHtml(trade.date)}</td>
-
-      <td>${escapeHtml(trade.stock)}</td>
-
-      <td class="${amountClass}">
-        ${trade.amount >= 0 ? "+" : ""}
-        ¥${trade.amount.toLocaleString()}
-      </td>
-
-      <td>${escapeHtml(trade.memo)}</td>
-
-      <td>
-        <button
-          class="delete-btn"
-          onclick="deleteTrade(${index})">
-          削除
-        </button>
-      </td>
-    `;
-
-
-    list.appendChild(row);
   });
 
 
+  const totalTrades =
+    wins + losses;
+
+
+  const winRate =
+    totalTrades > 0
+    ? Math.round(wins / totalTrades * 100)
+    : 0;
+
+
   const totalElement =
-    document.getElementById("total");
+    document.getElementById("totalProfit");
 
 
   totalElement.textContent =
@@ -376,33 +538,242 @@ function renderTrades() {
     total.toLocaleString();
 
 
-  totalElement.className =
-    total >= 0
-    ? "profit"
-    : "loss";
+  if (total >= 0) {
+    totalElement.className =
+      "stat-number profit";
+  } else {
+    totalElement.className =
+      "stat-number loss";
+  }
 
 
-  document.getElementById("wins").textContent =
+  document.getElementById("wins")
+    .textContent =
     wins + "回";
 
-  document.getElementById("losses").textContent =
+
+  document.getElementById("losses")
+    .textContent =
     losses + "回";
+
+
+  document.getElementById("winRate")
+    .textContent =
+    winRate + "%";
+
+
+  updateHistory();
+
+  updateRanking();
+
 }
 
 
-function escapeHtml(text) {
+/* 履歴 */
 
-  const div =
-    document.createElement("div");
+function updateHistory() {
 
-  div.textContent =
-    String(text ?? "");
+  const history =
+    document.getElementById("history");
 
-  return div.innerHTML;
+  history.innerHTML = "";
+
+
+  const reversed =
+    [...trades].reverse();
+
+
+  reversed.forEach(trade => {
+
+    const tr =
+      document.createElement("tr");
+
+
+    const profitText =
+      (trade.profit >= 0 ? "+" : "") +
+      "¥" +
+      trade.profit.toLocaleString();
+
+
+    tr.innerHTML = `
+
+      <td>
+        ${trade.date}
+      </td>
+
+      <td>
+        ${trade.code}<br>
+        ${trade.name}
+      </td>
+
+      <td style="
+        font-weight:bold;
+        color:${
+          trade.profit >= 0
+          ? "#e53935"
+          : "#1976d2"
+        }
+      ">
+        ${profitText}
+      </td>
+
+      <td>
+        <button
+          class="delete-btn"
+          onclick="deleteTrade(${trade.id})"
+        >
+          削除
+        </button>
+      </td>
+
+    `;
+
+
+    history.appendChild(tr);
+
+  });
+
 }
 
 
-renderTrades();
+/* 銘柄別ランキング */
+
+function updateRanking() {
+
+  const ranking =
+    document.getElementById("stockRanking");
+
+
+  if (trades.length === 0) {
+
+    ranking.innerHTML =
+      "まだ取引データがありません";
+
+    return;
+
+  }
+
+
+  const stocks = {};
+
+
+  trades.forEach(trade => {
+
+    const key =
+      trade.code + " " + trade.name;
+
+
+    if (!stocks[key]) {
+
+      stocks[key] = {
+        profit: 0,
+        wins: 0,
+        losses: 0,
+        trades: 0
+      };
+
+    }
+
+
+    stocks[key].profit += trade.profit;
+    stocks[key].trades++;
+
+
+    if (trade.profit > 0) {
+      stocks[key].wins++;
+    }
+
+
+    if (trade.profit < 0) {
+      stocks[key].losses++;
+    }
+
+  });
+
+
+  const sorted =
+    Object.entries(stocks)
+    .sort(
+      (a,b) =>
+      b[1].profit - a[1].profit
+    );
+
+
+  let html = "";
+
+
+  sorted.forEach(
+    ([name,data],index) => {
+
+
+      const winRate =
+        data.trades > 0
+        ? Math.round(
+            data.wins /
+            data.trades *
+            100
+          )
+        : 0;
+
+
+      html += `
+
+        <div class="stock">
+
+          <div class="stock-name">
+
+            ${index + 1}位
+            ${name}
+
+          </div>
+
+          <div class="stock-info">
+
+            合計収支：
+
+            <strong
+              style="
+              color:${
+                data.profit >= 0
+                ? "#e53935"
+                : "#1976d2"
+              }">
+
+              ${
+                data.profit >= 0
+                ? "+"
+                : ""
+              }
+
+              ¥${data.profit.toLocaleString()}
+
+            </strong>
+
+            <br>
+
+            取引：
+            ${data.trades}回
+
+            ／ 勝率：
+            ${winRate}%
+
+          </div>
+
+        </div>
+
+      `;
+
+  });
+
+
+  ranking.innerHTML = html;
+
+}
+
+
+/* 起動 */
+
+updateScreen();
 
 </script>
 
