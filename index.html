@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>日本株 AIランキング</title>
 
@@ -13,236 +13,370 @@
 
     body {
       margin: 0;
-      background: #071426;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Noto Sans JP",
+        sans-serif;
+      background: #061426;
       color: #ffffff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-                   "Hiragino Kaku Gothic ProN", "Yu Gothic",
-                   Meiryo, sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
     .container {
-      max-width: 900px;
-      margin: auto;
-      padding: 24px 18px 60px;
+      width: min(100%, 980px);
+      margin: 0 auto;
+      padding: 28px 18px 60px;
     }
 
-    h1 {
-      font-size: 30px;
-      margin-bottom: 8px;
+    .header {
+      margin-bottom: 28px;
+    }
+
+    .title {
+      font-size: clamp(30px, 7vw, 54px);
+      font-weight: 900;
+      letter-spacing: -1px;
+      margin: 0;
     }
 
     .subtitle {
-      color: #9db0c9;
-      font-size: 16px;
-      margin-bottom: 22px;
+      color: #a8b8ce;
+      font-size: 18px;
+      line-height: 1.6;
+      margin-top: 16px;
     }
 
     .status-area {
       display: flex;
-      gap: 10px;
       flex-wrap: wrap;
-      margin-bottom: 24px;
+      gap: 12px;
+      margin: 24px 0;
     }
 
-    .badge {
-      padding: 10px 16px;
-      border-radius: 30px;
-      border: 1px solid #25527a;
-      background: #10253d;
-      font-size: 15px;
+    .status-box {
+      border: 2px solid #18476e;
+      background: #0d2036;
+      border-radius: 999px;
+      padding: 14px 22px;
+      font-size: 18px;
     }
 
-    .ok {
-      color: #65ff9c;
+    .success {
+      color: #4df09d;
     }
 
     .error {
-      color: #ff7b84;
+      color: #ff7070;
     }
 
-    .loading {
-      color: #ffd76a;
-    }
-
-    .message {
-      background: #101f31;
-      border: 1px solid #29445f;
-      border-radius: 15px;
-      padding: 20px;
-      margin-bottom: 22px;
-      color: #b8c5d8;
+    .message-box {
+      background: #0e2034;
+      border: 2px solid #28445f;
+      border-radius: 28px;
+      padding: 24px;
+      margin: 28px 0;
+      color: #afbdd0;
+      font-size: 18px;
+      line-height: 1.7;
     }
 
     .tabs {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 28px;
+      gap: 16px;
+      margin: 30px 0 38px;
     }
 
-    .tab {
-      border: none;
-      border-radius: 16px;
-      padding: 20px 10px;
-      color: white;
-      background: #132946;
-      font-weight: bold;
-      font-size: 20px;
+    .tab-button {
+      border: 0;
+      border-radius: 28px;
+      padding: 24px 12px;
+      font-size: 23px;
+      font-weight: 900;
+      color: #fff;
+      background: #152d4e;
       cursor: pointer;
+      transition: 0.2s;
     }
 
-    .tab.active {
+    .tab-button.active {
+      background: linear-gradient(135deg, #1798ff, #13c2ea);
+      transform: translateY(-2px);
+    }
+
+    .section-title {
+      font-size: clamp(30px, 7vw, 48px);
+      font-weight: 900;
+      margin: 0 0 25px;
+      line-height: 1.25;
+    }
+
+    .ranking-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .stock-card {
+      background: #0c1d31;
+      border-radius: 22px;
+      padding: 18px;
+      border: 2px solid #1e3856;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stock-card.strong-buy {
+      border-color: #20d57b;
       background: linear-gradient(
         135deg,
-        #1689ff,
-        #12b9f6
+        rgba(28, 213, 123, 0.13),
+        #0c1d31 45%
       );
     }
 
-    h2 {
-      font-size: 27px;
-      margin-top: 10px;
+    .stock-card.buy {
+      border-color: #4ecb86;
     }
 
-    .ranking {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+    .stock-card.wait {
+      border-color: #e1b84c;
     }
 
-    .card {
-      background: #101f31;
-      border: 1px solid #29445f;
-      border-radius: 17px;
-      padding: 17px;
+    .stock-card.warning {
+      border-color: #dc6060;
     }
 
-    .card-top {
-      display: flex;
+    .stock-top {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 14px;
       align-items: center;
-      gap: 13px;
     }
 
     .rank {
-      min-width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: #173655;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 21px;
-      font-weight: bold;
-    }
-
-    .rank.gold {
-      background: #e3b300;
-      color: #151515;
-    }
-
-    .rank.silver {
-      background: #c5ccd5;
-      color: #151515;
-    }
-
-    .rank.bronze {
-      background: #bc7740;
-    }
-
-    .stock-info {
-      flex: 1;
-    }
-
-    .name {
-      font-size: 19px;
-      font-weight: bold;
-    }
-
-    .code {
-      color: #94a8bf;
-      font-size: 14px;
-      margin-top: 3px;
-    }
-
-    .score {
-      font-weight: bold;
-      font-size: 20px;
-      color: #52e2ff;
-    }
-
-    .details {
-      margin-top: 14px;
+      width: 50px;
+      height: 50px;
+      border-radius: 16px;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 7px;
-      text-align: center;
+      place-items: center;
+      font-size: 21px;
+      font-weight: 900;
+      background: #162d49;
     }
 
-    .detail {
-      background: #0a1727;
-      padding: 9px 5px;
-      border-radius: 9px;
+    .rank-1 {
+      background: linear-gradient(135deg, #f2cd44, #d79613);
+      color: #171717;
     }
 
-    .label {
-      color: #869ab4;
-      font-size: 12px;
+    .rank-2 {
+      background: linear-gradient(135deg, #dae2eb, #7c8b9d);
+      color: #161616;
     }
 
-    .value {
-      margin-top: 4px;
+    .rank-3 {
+      background: linear-gradient(135deg, #ce8651, #8c4d27);
+    }
+
+    .stock-name {
+      font-size: 21px;
+      font-weight: 900;
+      line-height: 1.4;
+    }
+
+    .stock-name a {
+      color: #ffffff;
+    }
+
+    .stock-name a:hover {
+      color: #4ebfff;
+    }
+
+    .stock-code {
+      color: #8194ab;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    .price-area {
+      text-align: right;
+    }
+
+    .price {
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .change {
       font-size: 15px;
+      margin-top: 4px;
     }
 
     .positive {
-      color: #ff7078;
+      color: #48e28e;
     }
 
     .negative {
-      color: #61a9ff;
+      color: #ff7474;
     }
 
-    .reason {
+    .neutral {
+      color: #b6c2d0;
+    }
+
+    .signal-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .signal {
+      padding: 8px 13px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 14px;
+    }
+
+    .signal-strong {
+      background: rgba(25, 220, 125, 0.2);
+      color: #5affaf;
+    }
+
+    .signal-buy {
+      background: rgba(67, 196, 125, 0.17);
+      color: #5ae897;
+    }
+
+    .signal-wait {
+      background: rgba(229, 186, 74, 0.16);
+      color: #ffd364;
+    }
+
+    .signal-warning {
+      background: rgba(224, 81, 81, 0.16);
+      color: #ff7c7c;
+    }
+
+    .score {
+      font-weight: 900;
+      font-size: 17px;
+    }
+
+    .score-bar-bg {
+      width: 100%;
+      height: 9px;
+      border-radius: 999px;
+      background: #1a3049;
+      overflow: hidden;
       margin-top: 13px;
-      background: #0a1727;
-      border-radius: 9px;
-      padding: 12px;
-      color: #c4d1df;
-      line-height: 1.55;
     }
 
-    .error-box {
-      padding: 20px;
-      background: #471c23;
-      border: 1px solid #a83c48;
-      color: #ff9ca3;
-      border-radius: 15px;
-      line-height: 1.7;
+    .score-bar {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #1ba8f9, #39e78f);
+      transition: width 0.4s;
     }
 
-    .notice {
-      margin-top: 30px;
-      color: #7e90a7;
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+      margin-top: 16px;
+    }
+
+    .metric {
+      background: #13283e;
+      border-radius: 14px;
+      padding: 10px;
       text-align: center;
+    }
+
+    .metric-label {
+      color: #8092aa;
       font-size: 12px;
     }
 
+    .metric-value {
+      font-size: 16px;
+      font-weight: 800;
+      margin-top: 5px;
+    }
+
+    .reason {
+      border-top: 1px solid #263b52;
+      margin-top: 16px;
+      padding-top: 14px;
+      color: #b0bdd0;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .open-chart {
+      display: inline-block;
+      margin-top: 13px;
+      padding: 9px 14px;
+      border-radius: 11px;
+      background: #193654;
+      color: #65c5ff;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .empty {
+      padding: 40px 15px;
+      text-align: center;
+      color: #94a4b7;
+    }
+
+    .footer {
+      text-align: center;
+      color: #60748c;
+      font-size: 13px;
+      margin-top: 45px;
+      line-height: 1.7;
+    }
+
     @media (max-width: 600px) {
-
-      h1 {
-        font-size: 25px;
+      .container {
+        padding: 25px 16px 50px;
       }
 
-      .tab {
-        font-size: 18px;
+      .status-box {
+        width: 100%;
+        font-size: 16px;
       }
 
-      .details {
+      .tabs {
+        gap: 10px;
+      }
+
+      .tab-button {
+        padding: 20px 8px;
+        font-size: 19px;
+      }
+
+      .stock-top {
+        grid-template-columns: auto 1fr;
+      }
+
+      .price-area {
+        grid-column: 2;
+        text-align: left;
+      }
+
+      .metrics {
         grid-template-columns: 1fr 1fr 1fr;
-      }
-
-      .score {
-        font-size: 17px;
       }
     }
   </style>
@@ -252,48 +386,51 @@
 
 <div class="container">
 
-  <h1>📈 日本株 AIランキング</h1>
+  <header class="header">
+    <h1 class="title">📈 日本株 AIランキング</h1>
 
-  <div class="subtitle">
-    デイトレ候補・長期成長株候補を自動ランキング
-  </div>
+    <div class="subtitle">
+      デイトレ候補・長期成長株候補を自動ランキング
+    </div>
+  </header>
+
 
   <div class="status-area">
 
-    <div id="status" class="badge loading">
-      🟡 データ取得中
+    <div id="status" class="status-box">
+      🟡 データ取得中...
     </div>
 
-    <div id="updated" class="badge">
+    <div id="updated" class="status-box">
       更新時刻：--
     </div>
 
-    <div id="countdown" class="badge">
+    <div id="countdown" class="status-box">
       次回更新：60秒
     </div>
 
   </div>
 
 
-  <div id="message" class="message">
-    ランキングデータを読み込んでいます。
+  <div id="message" class="message-box">
+    ランキングデータを取得しています。
   </div>
 
 
   <div class="tabs">
 
     <button
-      id="dayButton"
-      class="tab active"
-      onclick="showDaytrade()"
+      id="daytradeBtn"
+      class="tab-button active"
+      onclick="switchTab('daytrade')"
     >
       ⚡ デイトレ<br>TOP30
     </button>
 
     <button
-      id="longButton"
-      class="tab"
-      onclick="showLongterm()"
+      id="longtermBtn"
+      class="tab-button"
+      onclick="switchTab('longterm')"
     >
       🚀 長期保有<br>TOP30
     </button>
@@ -301,15 +438,18 @@
   </div>
 
 
-  <h2 id="rankingTitle">
+  <h2 id="sectionTitle" class="section-title">
     ⚡ デイトレ候補ランキング
   </h2>
 
-  <div id="ranking" class="ranking"></div>
+
+  <div id="ranking" class="ranking-list"></div>
 
 
-  <div class="notice">
-    ※ランキングは参考情報です。利益を保証するものではありません。
+  <div class="footer">
+    ※ ランキングは参考情報です。<br>
+    投資利益を保証するものではありません。<br>
+    最終的な投資判断はご自身で行ってください。
   </div>
 
 </div>
@@ -318,205 +458,150 @@
 <script>
 
 const API_URL =
-  "https://script.google.com/macros/s/AKfycbwO7wWUeLTTy6QXq1lR5odHNSpUGpEwgvxG4eFq9baS9P5vUOo5FN6Tfvx1sUQZVHizNg/exec";
+"https://script.google.com/macros/s/AKfycbwO7wWUeLTTy6QXq1lR5odHNSpUGpEwgvxG4eFq9baS9P5vUOo5FN6Tfvx1sUQZVHizNg/exec";
 
 
-let stockData = null;
+const REFRESH_SECONDS = 60;
 
-let currentMode = "daytrade";
-
-let seconds = 60;
-
-let jsonpScript = null;
-
-let timeoutTimer = null;
+let currentTab = "daytrade";
+let apiData = null;
+let countdown = REFRESH_SECONDS;
 
 
-/*
-=====================================
- Apps Scriptから呼ばれる関数
-=====================================
-*/
+/* =======================================
+   データ取得
+======================================= */
 
-window.receiveData = function(data) {
+async function loadData() {
 
-  clearTimeout(timeoutTimer);
+  const status = document.getElementById("status");
+  const message = document.getElementById("message");
 
-  console.log("取得データ", data);
+  try {
 
-  if (!data) {
+    status.innerHTML = "🟡 データ取得中...";
+    status.className = "status-box";
 
-    showError(
-      "データが空です。"
+
+    const response = await fetch(
+      API_URL + "?t=" + Date.now(),
+      {
+        method: "GET",
+        cache: "no-store"
+      }
     );
 
-    return;
-  }
+
+    if (!response.ok) {
+      throw new Error(
+        "HTTPエラー " + response.status
+      );
+    }
 
 
-  if (data.status !== "ok") {
-
-    showError(
-      data.message ||
-      "APIからエラーが返されました。"
-    );
-
-    return;
-  }
+    const data = await response.json();
 
 
-  stockData = data;
+    if (!data || data.status !== "ok") {
 
-
-  document.getElementById("status").innerHTML =
-    "🟢 データ取得成功";
-
-  document.getElementById("status").className =
-    "badge ok";
-
-
-  document.getElementById("updated").innerHTML =
-    "更新時刻：" + (data.updated || "--");
-
-
-  document.getElementById("message").innerHTML =
-    "ランキングデータを正常に取得しました。";
-
-
-  seconds = 60;
-
-
-  renderRanking();
-
-};
-
-
-/*
-=====================================
- JSONPでデータ取得
-=====================================
-*/
-
-function loadData() {
-
-  document.getElementById("status").innerHTML =
-    "🟡 データ取得中";
-
-  document.getElementById("status").className =
-    "badge loading";
-
-
-  if (jsonpScript) {
-
-    jsonpScript.remove();
-
-  }
-
-
-  jsonpScript =
-    document.createElement("script");
-
-
-  const separator =
-    API_URL.includes("?")
-      ? "&"
-      : "?";
-
-
-  jsonpScript.src =
-    API_URL +
-    separator +
-    "callback=receiveData" +
-    "&t=" +
-    Date.now();
-
-
-  jsonpScript.async = true;
-
-
-  jsonpScript.onerror = function() {
-
-    clearTimeout(timeoutTimer);
-
-    showError(
-      "Apps Scriptとの通信に失敗しました。"
-    );
-
-  };
-
-
-  document.body.appendChild(jsonpScript);
-
-
-  /*
-   15秒たっても返事がない場合
-  */
-
-  timeoutTimer =
-    setTimeout(function() {
-
-      showError(
-        "データ取得がタイムアウトしました。"
+      throw new Error(
+        data?.message ||
+        "APIから正常なデータを取得できませんでした"
       );
 
-    },15000);
+    }
+
+
+    apiData = data;
+
+
+    status.innerHTML =
+      "🟢 データ取得成功";
+
+    status.className =
+      "status-box success";
+
+
+    document.getElementById("updated")
+      .innerHTML =
+      "更新時刻：" +
+      (
+        data.updated ||
+        new Date().toLocaleString("ja-JP")
+      );
+
+
+    message.innerHTML =
+      data.notice ||
+      "ランキングデータを正常に取得しました。";
+
+
+    renderRanking();
+
+
+    countdown =
+      REFRESH_SECONDS;
+
+
+  } catch (error) {
+
+    console.error(error);
+
+
+    status.innerHTML =
+      "🔴 データ取得失敗";
+
+    status.className =
+      "status-box error";
+
+
+    message.innerHTML =
+      "データ取得に失敗しました。<br>" +
+      "しばらくしてから自動で再取得します。<br><br>" +
+      error.message;
+
+  }
 
 }
 
 
-/*
-=====================================
- エラー表示
-=====================================
-*/
 
-function showError(message) {
+/* =======================================
+   タブ切替
+======================================= */
 
-  document.getElementById("status").innerHTML =
-    "🔴 データ取得失敗";
+function switchTab(tab) {
 
-  document.getElementById("status").className =
-    "badge error";
+  currentTab = tab;
 
 
-  document.getElementById("updated").innerHTML =
-    "更新時刻：--";
+  const daytradeBtn =
+    document.getElementById("daytradeBtn");
+
+  const longtermBtn =
+    document.getElementById("longtermBtn");
+
+  const sectionTitle =
+    document.getElementById("sectionTitle");
 
 
-  document.getElementById("message").innerHTML =
-    `
-    <div class="error-box">
-      データを取得できませんでした。<br><br>
-      ${message}
-    </div>
-    `;
+  if (tab === "daytrade") {
 
-}
+    daytradeBtn.classList.add("active");
+    longtermBtn.classList.remove("active");
 
+    sectionTitle.innerHTML =
+      "⚡ デイトレ候補ランキング";
 
-/*
-=====================================
- デイトレ表示
-=====================================
-*/
+  } else {
 
-function showDaytrade() {
+    longtermBtn.classList.add("active");
+    daytradeBtn.classList.remove("active");
 
-  currentMode = "daytrade";
+    sectionTitle.innerHTML =
+      "🚀 長期保有候補ランキング";
 
-
-  document
-    .getElementById("dayButton")
-    .classList.add("active");
-
-
-  document
-    .getElementById("longButton")
-    .classList.remove("active");
-
-
-  document.getElementById("rankingTitle").innerHTML =
-    "⚡ デイトレ候補ランキング";
+  }
 
 
   renderRanking();
@@ -524,41 +609,10 @@ function showDaytrade() {
 }
 
 
-/*
-=====================================
- 長期保有表示
-=====================================
-*/
 
-function showLongterm() {
-
-  currentMode = "longterm";
-
-
-  document
-    .getElementById("longButton")
-    .classList.add("active");
-
-
-  document
-    .getElementById("dayButton")
-    .classList.remove("active");
-
-
-  document.getElementById("rankingTitle").innerHTML =
-    "🚀 長期成長株候補ランキング";
-
-
-  renderRanking();
-
-}
-
-
-/*
-=====================================
- ランキング生成
-=====================================
-*/
+/* =======================================
+   ランキング表示
+======================================= */
 
 function renderRanking() {
 
@@ -569,248 +623,522 @@ function renderRanking() {
   container.innerHTML = "";
 
 
-  if (!stockData) {
+  if (!apiData) {
 
     container.innerHTML =
-      "<div class='message'>データ取得待ちです。</div>";
+      '<div class="empty">データ取得中...</div>';
 
     return;
 
   }
 
 
-  let list =
-    stockData[currentMode];
+  let stocks = [];
 
 
-  if (!Array.isArray(list)) {
+  if (currentTab === "daytrade") {
+
+    stocks =
+      Array.isArray(apiData.daytrade)
+        ? apiData.daytrade
+        : [];
+
+  } else {
+
+    stocks =
+      Array.isArray(apiData.longterm)
+        ? apiData.longterm
+        : [];
+
+  }
+
+
+  stocks =
+    stocks
+      .slice(0, 30)
+      .map((stock, index) => {
+
+        return {
+          ...stock,
+          rank:
+            Number(stock.rank) ||
+            index + 1
+        };
+
+      });
+
+
+  if (stocks.length === 0) {
 
     container.innerHTML =
-      "<div class='error-box'>ランキングデータがありません。</div>";
+      '<div class="empty">ランキングデータがありません。</div>';
 
     return;
 
   }
 
 
-  list
-    .slice(0,30)
-    .forEach(function(stock,index) {
+  stocks.forEach(stock => {
 
+    container.appendChild(
+      createStockCard(stock)
+    );
 
-      const rank =
-        stock.rank ||
-        index + 1;
-
-
-      let rankClass = "";
-
-      if (rank === 1)
-        rankClass = "gold";
-
-      else if (rank === 2)
-        rankClass = "silver";
-
-      else if (rank === 3)
-        rankClass = "bronze";
-
-
-      let changeClass =
-        Number(stock.change) >= 0
-          ? "positive"
-          : "negative";
-
-
-      let changeText =
-        Number(stock.change) >= 0
-          ? "+"
-          : "";
-
-
-      const card =
-        document.createElement("div");
-
-
-      card.className = "card";
-
-
-      card.innerHTML = `
-
-        <div class="card-top">
-
-          <div class="rank ${rankClass}">
-            ${rank}
-          </div>
-
-
-          <div class="stock-info">
-
-            <div class="name">
-              ${escapeHtml(stock.name || "名称なし")}
-            </div>
-
-            <div class="code">
-              ${escapeHtml(stock.code || stock.symbol || "")}
-            </div>
-
-          </div>
-
-
-          <div class="score">
-            ${number(stock.score)}
-            点
-          </div>
-
-        </div>
-
-
-        <div class="details">
-
-          <div class="detail">
-
-            <div class="label">
-              株価
-            </div>
-
-            <div class="value">
-              ¥${formatPrice(stock.price)}
-            </div>
-
-          </div>
-
-
-          <div class="detail">
-
-            <div class="label">
-              騰落率
-            </div>
-
-            <div class="value ${changeClass}">
-              ${changeText}${number(stock.change)}%
-            </div>
-
-          </div>
-
-
-          <div class="detail">
-
-            <div class="label">
-              モメンタム
-            </div>
-
-            <div class="value">
-              ${number(stock.momentum)}
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div class="reason">
-
-          <strong>AI判定理由</strong><br>
-
-          ${escapeHtml(
-            stock.reason ||
-            "分析中"
-          )}
-
-        </div>
-
-      `;
-
-
-      container.appendChild(card);
-
-    });
+  });
 
 }
 
 
-/*
-=====================================
- 数字処理
-=====================================
-*/
 
-function number(value) {
+/* =======================================
+   銘柄カード生成
+======================================= */
 
-  const n = Number(value);
+function createStockCard(stock) {
 
-  if (Number.isNaN(n))
-    return "-";
+  const card =
+    document.createElement("div");
 
-  return Math.round(n * 100) / 100;
+
+  const score =
+    normalizeNumber(stock.score);
+
+
+  const signal =
+    getSignal(score);
+
+
+  card.className =
+    "stock-card " +
+    signal.cardClass;
+
+
+  const rank =
+    Number(stock.rank) || 0;
+
+
+  const code =
+    stock.code ||
+    String(stock.symbol || "")
+      .replace(".T", "");
+
+
+  const symbol =
+    stock.symbol ||
+    code + ".T";
+
+
+  const name =
+    stock.name ||
+    symbol;
+
+
+  const price =
+    normalizeNumber(stock.price);
+
+
+  const change =
+    normalizeNumber(stock.change);
+
+
+  const momentum =
+    normalizeNumber(stock.momentum);
+
+
+  const volumeRatio =
+    normalizeNumber(stock.volumeRatio);
+
+
+  const yahooUrl =
+    "https://finance.yahoo.co.jp/quote/" +
+    encodeURIComponent(symbol);
+
+
+  let changeClass =
+    "neutral";
+
+  if (change > 0) {
+    changeClass =
+      "positive";
+  }
+
+  if (change < 0) {
+    changeClass =
+      "negative";
+  }
+
+
+  let rankClass = "";
+
+  if (rank === 1) {
+    rankClass = "rank-1";
+  }
+
+  if (rank === 2) {
+    rankClass = "rank-2";
+  }
+
+  if (rank === 3) {
+    rankClass = "rank-3";
+  }
+
+
+  card.innerHTML = `
+
+    <div class="stock-top">
+
+      <div class="rank ${rankClass}">
+        ${rank}
+      </div>
+
+
+      <div>
+
+        <div class="stock-name">
+
+          <a
+            href="${yahooUrl}"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            ${escapeHtml(name)}
+          </a>
+
+        </div>
+
+
+        <div class="stock-code">
+          ${escapeHtml(code)}
+          / ${escapeHtml(symbol)}
+        </div>
+
+      </div>
+
+
+      <div class="price-area">
+
+        <div class="price">
+          ${formatPrice(price)}
+        </div>
+
+        <div class="change ${changeClass}">
+          ${formatSigned(change)}%
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="signal-row">
+
+      <div class="signal ${signal.signalClass}">
+        ${signal.label}
+      </div>
+
+      <div class="score">
+        AIスコア
+        ${score.toFixed(1)}
+      </div>
+
+    </div>
+
+
+
+    <div class="score-bar-bg">
+
+      <div
+        class="score-bar"
+        style="
+          width:
+          ${Math.max(
+            0,
+            Math.min(100, score)
+          )}%
+        "
+      ></div>
+
+    </div>
+
+
+
+    <div class="metrics">
+
+      <div class="metric">
+
+        <div class="metric-label">
+          当日騰落
+        </div>
+
+        <div
+          class="metric-value
+          ${changeClass}"
+        >
+          ${formatSigned(change)}%
+        </div>
+
+      </div>
+
+
+      <div class="metric">
+
+        <div class="metric-label">
+          モメンタム
+        </div>
+
+        <div class="metric-value">
+          ${formatSigned(momentum)}%
+        </div>
+
+      </div>
+
+
+      <div class="metric">
+
+        <div class="metric-label">
+          出来高倍率
+        </div>
+
+        <div class="metric-value">
+          ${formatVolumeRatio(volumeRatio)}
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="reason">
+
+      <strong>判定理由：</strong>
+
+      ${
+        escapeHtml(
+          stock.reason ||
+          "総合スコアから算出"
+        )
+      }
+
+      <br>
+
+      <a
+        href="${yahooUrl}"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="open-chart"
+      >
+        📊 株価チャートを見る
+      </a>
+
+    </div>
+
+  `;
+
+
+  return card;
 
 }
+
+
+
+/* =======================================
+   売買候補判定
+======================================= */
+
+function getSignal(score) {
+
+  if (score >= 80) {
+
+    return {
+      label:
+        "🔥 強い買い候補",
+
+      cardClass:
+        "strong-buy",
+
+      signalClass:
+        "signal-strong"
+    };
+
+  }
+
+
+  if (score >= 65) {
+
+    return {
+      label:
+        "🟢 買い候補",
+
+      cardClass:
+        "buy",
+
+      signalClass:
+        "signal-buy"
+    };
+
+  }
+
+
+  if (score >= 50) {
+
+    return {
+      label:
+        "🟡 様子見",
+
+      cardClass:
+        "wait",
+
+      signalClass:
+        "signal-wait"
+    };
+
+  }
+
+
+  return {
+
+    label:
+      "🔴 注意",
+
+    cardClass:
+      "warning",
+
+    signalClass:
+      "signal-warning"
+
+  };
+
+}
+
+
+
+/* =======================================
+   数値処理
+======================================= */
+
+function normalizeNumber(value) {
+
+  const n =
+    Number(value);
+
+  return Number.isFinite(n)
+    ? n
+    : 0;
+
+}
+
 
 
 function formatPrice(value) {
 
-  const n = Number(value);
+  if (!value) {
+    return "--";
+  }
 
-  if (Number.isNaN(n))
-    return "-";
 
-  return n.toLocaleString("ja-JP");
+  return (
+    "¥" +
+    Math.round(value)
+      .toLocaleString("ja-JP")
+  );
 
 }
 
 
-/*
-=====================================
- HTML安全化
-=====================================
-*/
+
+function formatSigned(value) {
+
+  const n =
+    normalizeNumber(value);
+
+
+  const sign =
+    n > 0
+      ? "+"
+      : "";
+
+
+  return (
+    sign +
+    n.toFixed(2)
+  );
+
+}
+
+
+
+function formatVolumeRatio(value) {
+
+  const n =
+    normalizeNumber(value);
+
+
+  if (n <= 0) {
+    return "--";
+  }
+
+
+  return (
+    n.toFixed(2) +
+    "倍"
+  );
+
+}
+
+
+
+/* =======================================
+   HTMLエスケープ
+======================================= */
 
 function escapeHtml(value) {
 
   return String(value)
-
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 
 }
 
 
-/*
-=====================================
- 60秒カウントダウン
-=====================================
-*/
 
-setInterval(function() {
+/* =======================================
+   自動更新カウントダウン
+======================================= */
 
-  seconds--;
+setInterval(() => {
+
+  countdown--;
 
 
-  if (seconds <= 0) {
+  if (countdown <= 0) {
 
-    seconds = 60;
+    countdown =
+      REFRESH_SECONDS;
 
     loadData();
 
   }
 
 
-  document.getElementById("countdown").innerHTML =
-    "次回更新：" +
-    seconds +
-    "秒";
+  document
+    .getElementById("countdown")
+    .innerHTML =
+      "次回更新：" +
+      countdown +
+      "秒";
+
+}, 1000);
 
 
-},1000);
 
-
-/*
-=====================================
- 初回取得
-=====================================
-*/
+/* =======================================
+   初回読み込み
+======================================= */
 
 loadData();
 
