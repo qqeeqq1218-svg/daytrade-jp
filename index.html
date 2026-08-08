@@ -13,55 +13,53 @@
 
     body {
       margin: 0;
-      padding: 0;
-      background: #0f172a;
-      color: white;
       font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      color: #222;
     }
 
     header {
-      background: #1e293b;
+      background: #111827;
+      color: white;
       padding: 20px;
       text-align: center;
-      border-bottom: 1px solid #334155;
     }
 
     header h1 {
       margin: 0;
-      font-size: 25px;
+      font-size: 26px;
     }
 
     header p {
       margin: 8px 0 0;
-      color: #94a3b8;
-      font-size: 13px;
+      color: #d1d5db;
     }
 
     .container {
-      max-width: 700px;
+      max-width: 900px;
       margin: auto;
-      padding: 15px;
+      padding: 16px;
     }
 
     .summary {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 10px;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
     }
 
     .card {
-      background: #1e293b;
-      padding: 15px;
+      background: white;
       border-radius: 12px;
+      padding: 16px;
       text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
 
-    .card span {
-      display: block;
-      color: #94a3b8;
-      font-size: 13px;
-      margin-bottom: 7px;
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 14px;
+      color: #666;
     }
 
     .card strong {
@@ -69,139 +67,344 @@
     }
 
     .profit {
-      color: #22c55e;
+      color: #e53935;
     }
 
     .loss {
-      color: #ef4444;
+      color: #1565c0;
     }
 
     .form-box {
-      background: #1e293b;
-      padding: 15px;
+      background: white;
+      padding: 18px;
       border-radius: 12px;
-      margin-bottom: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
     }
 
     .form-box h2 {
       margin-top: 0;
-      font-size: 19px;
     }
 
-    label {
-      display: block;
-      margin-top: 12px;
-      margin-bottom: 5px;
-      color: #cbd5e1;
-      font-size: 14px;
-    }
-
-    input,
-    select,
-    textarea {
+    input, select, button {
       width: 100%;
       padding: 12px;
-      border: 1px solid #475569;
+      margin: 6px 0;
       border-radius: 8px;
-      background: #0f172a;
-      color: white;
+      border: 1px solid #ccc;
       font-size: 16px;
-    }
-
-    textarea {
-      min-height: 70px;
-      resize: vertical;
     }
 
     button {
-      width: 100%;
-      margin-top: 15px;
-      padding: 14px;
-      border: none;
-      border-radius: 8px;
       background: #2563eb;
       color: white;
-      font-size: 16px;
+      border: none;
       font-weight: bold;
       cursor: pointer;
     }
 
     button:active {
-      background: #1d4ed8;
+      opacity: 0.8;
     }
 
     .delete-btn {
       background: #dc2626;
-      margin-top: 8px;
-      padding: 9px;
-      font-size: 14px;
-    }
-
-    .history {
-      background: #1e293b;
-      padding: 15px;
-      border-radius: 12px;
-    }
-
-    .history h2 {
-      margin-top: 0;
-      font-size: 19px;
-    }
-
-    .trade {
-      background: #0f172a;
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      border: 1px solid #334155;
-    }
-
-    .trade-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 6px;
-    }
-
-    .trade-symbol {
-      font-weight: bold;
-      font-size: 17px;
-    }
-
-    .trade-date {
-      color: #94a3b8;
+      padding: 7px;
       font-size: 13px;
     }
 
-    .trade-result {
-      font-size: 19px;
-      font-weight: bold;
-      margin-top: 6px;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
 
-    .memo {
-      margin-top: 6px;
-      color: #cbd5e1;
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      text-align: center;
       font-size: 14px;
-      word-break: break-word;
     }
 
-    .empty {
-      color: #94a3b8;
-      text-align: center;
-      padding: 20px 5px;
+    th {
+      background: #1f2937;
+      color: white;
     }
 
-    .reset-btn {
-      background: #475569;
-      margin-top: 15px;
+    .table-wrap {
+      overflow-x: auto;
     }
 
-    footer {
-      text-align: center;
-      color: #64748b;
-      padding: 25px 10px;
-      font-size: 12px;
+    @media (max-width: 600px) {
+      .summary {
+        grid-template-columns: 1fr;
+      }
+
+      header h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>📈 デイトレード収支管理</h1>
+  <p>毎日の利益・損失を簡単に記録</p>
+</header>
+
+<div class="container">
+
+  <div class="summary">
+
+    <div class="card">
+      <h3>合計収支</h3>
+      <strong id="total">¥0</strong>
+    </div>
+
+    <div class="card">
+      <h3>勝ち</h3>
+      <strong id="wins" class="profit">0回</strong>
+    </div>
+
+    <div class="card">
+      <h3>負け</h3>
+      <strong id="losses" class="loss">0回</strong>
+    </div>
+
+  </div>
+
+  <div class="form-box">
+
+    <h2>取引を追加</h2>
+
+    <input type="date" id="date">
+
+    <input
+      type="text"
+      id="stock"
+      placeholder="銘柄名・銘柄コード"
+    >
+
+    <input
+      type="number"
+      id="amount"
+      placeholder="収支金額 例：5000 / -3000"
+    >
+
+    <input
+      type="text"
+      id="memo"
+      placeholder="メモ"
+    >
+
+    <button onclick="addTrade()">
+      取引を保存
+    </button>
+
+  </div>
+
+  <div class="table-wrap">
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>日付</th>
+          <th>銘柄</th>
+          <th>収支</th>
+          <th>メモ</th>
+          <th>削除</th>
+        </tr>
+      </thead>
+
+      <tbody id="tradeList"></tbody>
+
+    </table>
+
+  </div>
+
+</div>
+
+<script>
+
+let trades = JSON.parse(
+  localStorage.getItem("daytradeData")
+) || [];
+
+document.getElementById("date").value =
+  new Date().toISOString().split("T")[0];
+
+
+function addTrade() {
+
+  const date =
+    document.getElementById("date").value;
+
+  const stock =
+    document.getElementById("stock").value.trim();
+
+  const amount =
+    Number(document.getElementById("amount").value);
+
+  const memo =
+    document.getElementById("memo").value.trim();
+
+
+  if (!date || !stock ||
+      document.getElementById("amount").value === "") {
+
+    alert("日付・銘柄・収支金額を入力してください。");
+    return;
+  }
+
+
+  trades.push({
+    date: date,
+    stock: stock,
+    amount: amount,
+    memo: memo
+  });
+
+
+  saveData();
+
+
+  document.getElementById("stock").value = "";
+  document.getElementById("amount").value = "";
+  document.getElementById("memo").value = "";
+
+
+  renderTrades();
+}
+
+
+function deleteTrade(index) {
+
+  if (confirm("この取引を削除しますか？")) {
+
+    trades.splice(index, 1);
+
+    saveData();
+
+    renderTrades();
+  }
+}
+
+
+function saveData() {
+
+  localStorage.setItem(
+    "daytradeData",
+    JSON.stringify(trades)
+  );
+}
+
+
+function renderTrades() {
+
+  const list =
+    document.getElementById("tradeList");
+
+  list.innerHTML = "";
+
+  let total = 0;
+  let wins = 0;
+  let losses = 0;
+
+
+  trades.forEach((trade, index) => {
+
+    total += trade.amount;
+
+    if (trade.amount > 0) {
+      wins++;
     }
 
-    @media
+    if (trade.amount < 0) {
+      losses++;
+    }
+
+
+    const row =
+      document.createElement("tr");
+
+
+    const amountClass =
+      trade.amount >= 0
+      ? "profit"
+      : "loss";
+
+
+    row.innerHTML = `
+      <td>${escapeHtml(trade.date)}</td>
+
+      <td>${escapeHtml(trade.stock)}</td>
+
+      <td class="${amountClass}">
+        ${trade.amount >= 0 ? "+" : ""}
+        ¥${trade.amount.toLocaleString()}
+      </td>
+
+      <td>${escapeHtml(trade.memo)}</td>
+
+      <td>
+        <button
+          class="delete-btn"
+          onclick="deleteTrade(${index})">
+          削除
+        </button>
+      </td>
+    `;
+
+
+    list.appendChild(row);
+  });
+
+
+  const totalElement =
+    document.getElementById("total");
+
+
+  totalElement.textContent =
+    (total >= 0 ? "+" : "") +
+    "¥" +
+    total.toLocaleString();
+
+
+  totalElement.className =
+    total >= 0
+    ? "profit"
+    : "loss";
+
+
+  document.getElementById("wins").textContent =
+    wins + "回";
+
+  document.getElementById("losses").textContent =
+    losses + "回";
+}
+
+
+function escapeHtml(text) {
+
+  const div =
+    document.createElement("div");
+
+  div.textContent =
+    String(text ?? "");
+
+  return div.innerHTML;
+}
+
+
+renderTrades();
+
+</script>
+
+</body>
+</html>
