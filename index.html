@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>日本株 AIランキング</title>
 
   <style>
@@ -16,103 +16,98 @@
         -apple-system,
         BlinkMacSystemFont,
         "Segoe UI",
-        "Hiragino Kaku Gothic ProN",
-        "Yu Gothic",
-        Meiryo,
+        "Noto Sans JP",
         sans-serif;
       background: #07111f;
       color: #ffffff;
     }
 
     header {
-      padding: 22px 15px;
-      text-align: center;
-      background: linear-gradient(135deg, #0d1b2a, #123c69);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
       position: sticky;
       top: 0;
       z-index: 100;
+      background: rgba(7, 17, 31, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #1f3550;
+      padding: 16px;
     }
 
-    header h1 {
+    .header-inner {
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    h1 {
       margin: 0;
-      font-size: 27px;
-      letter-spacing: 1px;
+      font-size: 24px;
     }
 
-    header p {
-      margin: 8px 0 0;
-      color: #b9d4ef;
+    .subtitle {
+      margin-top: 6px;
       font-size: 13px;
+      color: #9fb3c8;
     }
 
     .status-area {
-      margin-top: 12px;
       display: flex;
-      justify-content: center;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 10px;
+      margin-top: 12px;
+      font-size: 13px;
     }
 
     .status {
-      display: inline-block;
-      padding: 6px 12px;
-      border-radius: 100px;
-      font-size: 12px;
-      background: rgba(255,255,255,0.1);
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #10233b;
+      border: 1px solid #1e456d;
     }
 
     .status.ok {
-      color: #75ffb3;
+      color: #62f7a7;
     }
 
     .status.error {
-      color: #ff8c8c;
+      color: #ff7070;
     }
 
-    .container {
-      width: min(1500px, 100%);
+    main {
+      max-width: 1200px;
       margin: auto;
-      padding: 18px 10px 40px;
+      padding: 18px 14px 60px;
     }
 
     .notice {
-      background: #17263a;
-      border: 1px solid #2a405b;
+      background: #101d2d;
+      border: 1px solid #243b55;
       border-radius: 12px;
       padding: 12px;
       margin-bottom: 18px;
-      color: #b9cce2;
       font-size: 13px;
-      line-height: 1.6;
+      color: #b8c9da;
     }
 
     .tabs {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       margin-bottom: 18px;
-      position: sticky;
-      top: 105px;
-      z-index: 90;
-      padding: 5px 0;
-      background: #07111f;
     }
 
-    .tab {
+    .tab-button {
       flex: 1;
+      padding: 13px;
       border: none;
-      border-radius: 12px;
-      padding: 14px 8px;
-      cursor: pointer;
+      border-radius: 10px;
+      background: #10233b;
+      color: #cbd8e5;
       font-weight: bold;
       font-size: 15px;
-      color: #c8dbef;
-      background: #142338;
+      cursor: pointer;
     }
 
-    .tab.active {
+    .tab-button.active {
+      background: linear-gradient(135deg, #1677ff, #00a8ff);
       color: white;
-      background: linear-gradient(135deg, #087fef, #00a5ff);
     }
 
     .section {
@@ -124,115 +119,98 @@
     }
 
     .section-title {
-      margin: 10px 0 15px;
+      margin: 0 0 14px;
       font-size: 21px;
     }
 
-    .ranking {
+    .cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
-      gap: 13px;
+      gap: 14px;
     }
 
     .card {
-      background: linear-gradient(145deg, #101d2e, #0d1726);
-      border: 1px solid #203550;
+      position: relative;
+      background:
+        linear-gradient(
+          145deg,
+          rgba(16, 35, 59, 0.98),
+          rgba(8, 20, 35, 0.98)
+        );
+      border: 1px solid #1e3b59;
       border-radius: 16px;
       padding: 16px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.22);
-      transition: transform 0.15s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
+      overflow: hidden;
     }
 
     .card.top1 {
-      border-color: #ffd700;
-      box-shadow: 0 0 22px rgba(255,215,0,0.12);
+      border: 1px solid #ffd45a;
+      box-shadow: 0 0 22px rgba(255, 212, 90, 0.16);
     }
 
     .card.top2 {
-      border-color: #c0c0c0;
+      border: 1px solid #cdd7df;
     }
 
     .card.top3 {
-      border-color: #cd7f32;
+      border: 1px solid #d38a52;
     }
 
-    .card-head {
+    .rank-row {
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: flex-start;
-      gap: 8px;
+      gap: 10px;
     }
 
     .rank {
-      font-size: 26px;
-      font-weight: 900;
-      min-width: 55px;
-    }
-
-    .rank1 {
-      color: #ffd700;
-    }
-
-    .rank2 {
-      color: #d9e2ec;
-    }
-
-    .rank3 {
-      color: #e5a15e;
-    }
-
-    .rankNormal {
-      color: #56b7ff;
-    }
-
-    .company {
-      flex: 1;
-    }
-
-    .company-name {
-      font-size: 18px;
+      font-size: 24px;
       font-weight: 800;
-      margin-bottom: 3px;
+      color: #5eb6ff;
     }
 
-    .code {
-      font-size: 12px;
-      color: #7f9ab7;
+    .rank.rank1 {
+      color: #ffd34d;
     }
 
-    .score-box {
-      text-align: right;
-      background: #17283d;
-      padding: 8px 10px;
-      border-radius: 10px;
-      min-width: 72px;
+    .rank.rank2 {
+      color: #d9e4ed;
     }
 
-    .score-label {
-      font-size: 10px;
-      color: #7e9bb9;
+    .rank.rank3 {
+      color: #e49a66;
     }
 
     .score {
-      font-size: 20px;
+      font-size: 14px;
       font-weight: bold;
-      color: #4fc3ff;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: #16324e;
+      color: #7dc4ff;
+    }
+
+    .stock-name {
+      font-size: 19px;
+      font-weight: 800;
+      margin-top: 10px;
+    }
+
+    .stock-code {
+      font-size: 12px;
+      color: #8299ae;
+      margin-top: 3px;
     }
 
     .price {
-      margin-top: 16px;
+      margin-top: 12px;
       font-size: 26px;
-      font-weight: bold;
+      font-weight: 800;
     }
 
-    .price span {
-      color: #9cb2c9;
+    .price small {
       font-size: 13px;
-      font-weight: normal;
+      color: #9bb0c4;
     }
 
     .metrics {
@@ -243,98 +221,113 @@
     }
 
     .metric {
-      background: #132337;
-      border-radius: 9px;
+      background: #091728;
+      border-radius: 10px;
       padding: 9px;
     }
 
-    .metric-name {
-      color: #7f9bb9;
+    .metric-label {
       font-size: 11px;
+      color: #8299ae;
     }
 
     .metric-value {
       margin-top: 3px;
-      font-size: 15px;
+      font-size: 16px;
       font-weight: bold;
     }
 
     .positive {
-      color: #61e999;
+      color: #54e89b;
     }
 
     .negative {
-      color: #ff7373;
+      color: #ff6e7c;
     }
 
     .neutral {
-      color: #c5d5e5;
+      color: #d5dde5;
     }
 
     .reason {
-      margin-top: 13px;
-      padding-top: 13px;
-      border-top: 1px solid #203550;
-      color: #c1d1e1;
+      margin-top: 12px;
+      padding: 10px;
+      background: rgba(16, 45, 70, 0.7);
+      border-radius: 10px;
+      color: #c5d6e6;
       font-size: 13px;
-      line-height: 1.65;
+      line-height: 1.55;
     }
 
-    .reason-title {
-      color: #65c6ff;
+    .signal {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 12px;
       font-weight: bold;
-      margin-bottom: 4px;
+      padding: 5px 8px;
+      border-radius: 7px;
+    }
+
+    .signal.strong {
+      background: rgba(31, 200, 116, 0.16);
+      color: #59eca5;
+      border: 1px solid rgba(89, 236, 165, 0.35);
+    }
+
+    .signal.medium {
+      background: rgba(255, 190, 55, 0.14);
+      color: #ffd063;
+      border: 1px solid rgba(255, 208, 99, 0.3);
+    }
+
+    .signal.watch {
+      background: rgba(70, 145, 255, 0.13);
+      color: #78b7ff;
+      border: 1px solid rgba(120, 183, 255, 0.3);
     }
 
     .loading {
-      padding: 60px 20px;
       text-align: center;
-      color: #9db7cf;
-      font-size: 16px;
+      padding: 50px 10px;
+      color: #8ca5ba;
+      font-size: 15px;
     }
 
-    .update-button {
-      border: none;
-      background: #1584e8;
-      color: white;
-      border-radius: 8px;
-      padding: 7px 13px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .update-button:disabled {
-      opacity: .5;
-      cursor: wait;
+    .error-box {
+      background: #38171d;
+      color: #ff9da6;
+      padding: 15px;
+      border-radius: 12px;
+      border: 1px solid #7d2e39;
+      margin-top: 15px;
     }
 
     footer {
       text-align: center;
-      color: #647e98;
-      font-size: 11px;
-      padding: 20px 10px 40px;
+      color: #607b92;
+      font-size: 12px;
+      padding: 25px 10px;
     }
 
     @media (max-width: 600px) {
-      header h1 {
-        font-size: 22px;
+      h1 {
+        font-size: 20px;
       }
 
-      .container {
-        padding-left: 8px;
-        padding-right: 8px;
-      }
-
-      .ranking {
+      .cards {
         grid-template-columns: 1fr;
-      }
-
-      .tabs {
-        top: 115px;
       }
 
       .card {
         padding: 14px;
+      }
+
+      .price {
+        font-size: 24px;
+      }
+
+      .stock-name {
+        font-size: 18px;
       }
     }
   </style>
@@ -343,120 +336,229 @@
 <body>
 
 <header>
-  <h1>📈 日本株 AIランキング</h1>
-  <p>デイトレ候補 ＆ 長期成長株候補</p>
+  <div class="header-inner">
 
-  <div class="status-area">
-    <span id="status" class="status">データ取得中...</span>
-    <span id="updated" class="status">更新時刻 --</span>
+    <h1>📈 日本株 AIランキング</h1>
 
-    <button
-      id="reloadButton"
-      class="update-button"
-      onclick="loadData()">
-      今すぐ更新
-    </button>
+    <div class="subtitle">
+      デイトレ候補・長期成長株候補を自動ランキング
+    </div>
+
+    <div class="status-area">
+
+      <div id="connectionStatus" class="status">
+        ● データ取得中
+      </div>
+
+      <div id="updatedStatus" class="status">
+        更新時刻：--
+      </div>
+
+      <div id="countdownStatus" class="status">
+        次回更新：60秒
+      </div>
+
+    </div>
+
   </div>
 </header>
 
-<div class="container">
+<main>
 
   <div id="notice" class="notice">
-    ランキングは参考情報です。投資判断はご自身の責任で行ってください。
+    ランキングデータを読み込んでいます。
   </div>
 
   <div class="tabs">
+
     <button
-      class="tab active"
-      onclick="showTab('daytrade', this)">
+      class="tab-button active"
+      onclick="showTab('daytrade', this)"
+    >
       ⚡ デイトレ TOP30
     </button>
 
     <button
-      class="tab"
-      onclick="showTab('longterm', this)">
+      class="tab-button"
+      onclick="showTab('longterm', this)"
+    >
       🚀 長期保有 TOP30
     </button>
+
   </div>
 
-  <section id="daytrade" class="section active">
-    <h2 class="section-title">⚡ デイトレ候補ランキング</h2>
 
-    <div id="daytradeRanking" class="ranking">
+  <!-- デイトレ -->
+
+  <section
+    id="daytradeSection"
+    class="section active"
+  >
+
+    <h2 class="section-title">
+      ⚡ デイトレ候補ランキング
+    </h2>
+
+    <div
+      id="daytradeCards"
+      class="cards"
+    >
+
       <div class="loading">
-        デイトレランキングを読み込んでいます...
+        データ取得中...
       </div>
+
     </div>
+
   </section>
 
-  <section id="longterm" class="section">
-    <h2 class="section-title">🚀 長期成長株ランキング</h2>
 
-    <div id="longtermRanking" class="ranking">
+  <!-- 長期 -->
+
+  <section
+    id="longtermSection"
+    class="section"
+  >
+
+    <h2 class="section-title">
+      🚀 長期成長株ランキング
+    </h2>
+
+    <div
+      id="longtermCards"
+      class="cards"
+    >
+
       <div class="loading">
-        長期ランキングを読み込んでいます...
+        データ取得中...
       </div>
+
     </div>
+
   </section>
 
-</div>
+</main>
+
 
 <footer>
-  本ページは株価データを基にした参考ランキングです。<br>
-  将来の値上がり・利益を保証するものではありません。
+
+  株式投資には価格変動リスクがあります。<br>
+  本ランキングは投資判断の参考情報であり、
+  利益を保証するものではありません。
+
 </footer>
+
 
 <script>
 
-  // ==============================
-  // Apps Script API
-  // ==============================
+  /*
+  =====================================================
+  Apps Script Webアプリ URL
+  =====================================================
+  */
 
   const API_URL =
     "https://script.google.com/macros/s/AKfycbwO7wWUeLTTy6QXq1lR5odHNSpUGpEwgvxG4eFq9baS9P5vUOo5FN6Tfvx1sUQZVHizNg/exec";
 
 
-  // 1分 = 60,000ミリ秒
-  const UPDATE_INTERVAL = 60000;
+  /*
+  =====================================================
+  更新設定
+  =====================================================
+  */
+
+  const REFRESH_SECONDS = 60;
+
+  let countdown = REFRESH_SECONDS;
 
 
-  function showTab(id, button) {
+  /*
+  =====================================================
+  タブ切り替え
+  =====================================================
+  */
+
+  function showTab(type, button) {
+
+    document
+      .querySelectorAll(".tab-button")
+      .forEach(btn => btn.classList.remove("active"));
+
+    button.classList.add("active");
+
 
     document
       .querySelectorAll(".section")
-      .forEach(section => {
-        section.classList.remove("active");
-      });
+      .forEach(section => section.classList.remove("active"));
 
-    document
-      .querySelectorAll(".tab")
-      .forEach(tab => {
-        tab.classList.remove("active");
-      });
 
-    document
-      .getElementById(id)
-      .classList.add("active");
+    if (type === "daytrade") {
 
-    button.classList.add("active");
+      document
+        .getElementById("daytradeSection")
+        .classList.add("active");
+
+    } else {
+
+      document
+        .getElementById("longtermSection")
+        .classList.add("active");
+
+    }
+
   }
 
 
-  function numberFormat(value) {
+  /*
+  =====================================================
+  数値表示
+  =====================================================
+  */
+
+  function formatNumber(value) {
+
+    if (
+      value === null ||
+      value === undefined ||
+      value === ""
+    ) {
+      return "--";
+    }
+
+    const number = Number(value);
+
+    if (Number.isNaN(number)) {
+      return value;
+    }
+
+    return number.toLocaleString("ja-JP", {
+      maximumFractionDigits: 2
+    });
+
+  }
+
+
+  function formatPercent(value) {
+
+    if (
+      value === null ||
+      value === undefined
+    ) {
+      return "--";
+    }
 
     const num = Number(value);
 
-    if (!Number.isFinite(num)) {
-      return "-";
+    if (Number.isNaN(num)) {
+      return "--";
     }
 
-    return new Intl.NumberFormat("ja-JP", {
-      maximumFractionDigits: 2
-    }).format(num);
+    return `${num >= 0 ? "+" : ""}${num.toFixed(2)}%`;
+
   }
 
 
-  function percentClass(value) {
+  function valueClass(value) {
 
     const num = Number(value);
 
@@ -469,331 +571,472 @@
     }
 
     return "neutral";
+
   }
 
 
-  function signedPercent(value) {
-
-    const num = Number(value);
-
-    if (!Number.isFinite(num)) {
-      return "-";
-    }
-
-    const plus = num > 0 ? "+" : "";
-
-    return plus + numberFormat(num) + "%";
-  }
-
+  /*
+  =====================================================
+  順位色
+  =====================================================
+  */
 
   function rankClass(rank) {
 
-    if (rank === 1) {
-      return "rank1";
-    }
+    if (rank === 1) return "rank1";
 
-    if (rank === 2) {
-      return "rank2";
-    }
+    if (rank === 2) return "rank2";
 
-    if (rank === 3) {
-      return "rank3";
-    }
+    if (rank === 3) return "rank3";
 
-    return "rankNormal";
+    return "";
+
   }
 
 
   function cardClass(rank) {
 
-    if (rank === 1) {
-      return "top1";
-    }
+    if (rank === 1) return "top1";
 
-    if (rank === 2) {
-      return "top2";
-    }
+    if (rank === 2) return "top2";
 
-    if (rank === 3) {
-      return "top3";
-    }
+    if (rank === 3) return "top3";
 
     return "";
+
   }
 
 
   function rankIcon(rank) {
 
-    if (rank === 1) {
-      return "🥇";
-    }
+    if (rank === 1) return "🥇";
 
-    if (rank === 2) {
-      return "🥈";
-    }
+    if (rank === 2) return "🥈";
 
-    if (rank === 3) {
-      return "🥉";
-    }
+    if (rank === 3) return "🥉";
 
-    return rank + "位";
+    return `${rank}位`;
+
   }
 
 
-  function createDaytradeCard(stock) {
+  /*
+  =====================================================
+  スコアによる判定
+  =====================================================
+  */
 
-    return `
-      <article class="card ${cardClass(stock.rank)}">
+  function getSignal(score, type) {
 
-        <div class="card-head">
+    const num = Number(score);
 
-          <div class="rank ${rankClass(stock.rank)}">
-            ${rankIcon(stock.rank)}
-          </div>
 
-          <div class="company">
-            <div class="company-name">
-              ${escapeHtml(stock.name)}
-            </div>
+    if (type === "daytrade") {
 
-            <div class="code">
-              ${escapeHtml(stock.code)} /
-              ${escapeHtml(stock.symbol)}
-            </div>
-          </div>
+      if (num >= 70) {
 
-          <div class="score-box">
-            <div class="score-label">
-              AI SCORE
+        return {
+          text: "🔥 強い注目",
+          className: "strong"
+        };
+
+      }
+
+      if (num >= 60) {
+
+        return {
+          text: "📈 注目",
+          className: "medium"
+        };
+
+      }
+
+      return {
+        text: "👀 監視候補",
+        className: "watch"
+      };
+
+    }
+
+
+    if (num >= 125) {
+
+      return {
+        text: "🚀 強い成長トレンド",
+        className: "strong"
+      };
+
+    }
+
+    if (num >= 110) {
+
+      return {
+        text: "📈 成長候補",
+        className: "medium"
+      };
+
+    }
+
+    return {
+      text: "👀 長期監視",
+      className: "watch"
+    };
+
+  }
+
+
+  /*
+  =====================================================
+  デイトレ表示
+  =====================================================
+  */
+
+  function renderDaytrade(data) {
+
+    const container =
+      document.getElementById("daytradeCards");
+
+
+    if (
+      !Array.isArray(data) ||
+      data.length === 0
+    ) {
+
+      container.innerHTML = `
+        <div class="error-box">
+          デイトレランキングがありません。
+        </div>
+      `;
+
+      return;
+    }
+
+
+    container.innerHTML =
+      data.map(stock => {
+
+        const signal =
+          getSignal(stock.score, "daytrade");
+
+
+        return `
+
+        <article
+          class="card ${cardClass(stock.rank)}"
+        >
+
+          <div class="rank-row">
+
+            <div
+              class="rank ${rankClass(stock.rank)}"
+            >
+              ${rankIcon(stock.rank)}
             </div>
 
             <div class="score">
-              ${numberFormat(stock.score)}
-            </div>
-          </div>
-
-        </div>
-
-
-        <div class="price">
-          ¥${numberFormat(stock.price)}
-          <span>現在値</span>
-        </div>
-
-
-        <div class="metrics">
-
-          <div class="metric">
-            <div class="metric-name">
-              当日騰落率
+              AI SCORE
+              ${formatNumber(stock.score)}
             </div>
 
-            <div class="metric-value ${percentClass(stock.change)}">
-              ${signedPercent(stock.change)}
-            </div>
           </div>
 
 
-          <div class="metric">
-            <div class="metric-name">
-              短期モメンタム
-            </div>
+          <div class="stock-name">
+            ${stock.name}
+          </div>
 
-            <div class="metric-value ${percentClass(stock.momentum)}">
-              ${signedPercent(stock.momentum)}
-            </div>
+          <div class="stock-code">
+            ${stock.code}
+            /
+            ${stock.symbol}
           </div>
 
 
-          <div class="metric">
-            <div class="metric-name">
-              出来高倍率
-            </div>
-
-            <div class="metric-value">
-              ${numberFormat(stock.volumeRatio)}倍
-            </div>
+          <div class="price">
+            ¥${formatNumber(stock.price)}
+            <small>現在値</small>
           </div>
 
 
-          <div class="metric">
-            <div class="metric-name">
-              AIスコア
+          <div class="metrics">
+
+            <div class="metric">
+
+              <div class="metric-label">
+                当日騰落率
+              </div>
+
+              <div
+                class="metric-value
+                ${valueClass(stock.change)}"
+              >
+                ${formatPercent(stock.change)}
+              </div>
+
             </div>
 
-            <div class="metric-value">
-              ${numberFormat(stock.score)}
+
+            <div class="metric">
+
+              <div class="metric-label">
+                短期モメンタム
+              </div>
+
+              <div
+                class="metric-value
+                ${valueClass(stock.momentum)}"
+              >
+                ${formatPercent(stock.momentum)}
+              </div>
+
             </div>
+
+
+            <div class="metric">
+
+              <div class="metric-label">
+                出来高倍率
+              </div>
+
+              <div class="metric-value">
+                ${formatNumber(stock.volumeRatio)}倍
+              </div>
+
+            </div>
+
+
+            <div class="metric">
+
+              <div class="metric-label">
+                AIスコア
+              </div>
+
+              <div class="metric-value">
+                ${formatNumber(stock.score)}
+              </div>
+
+            </div>
+
           </div>
 
-        </div>
 
-
-        <div class="reason">
-
-          <div class="reason-title">
-            AI選定理由
+          <div
+            class="signal ${signal.className}"
+          >
+            ${signal.text}
           </div>
 
-          ${escapeHtml(stock.reason)}
 
-        </div>
+          <div class="reason">
 
-      </article>
-    `;
+            <strong>選定理由</strong><br>
+
+            ${stock.reason || "総合評価"}
+
+          </div>
+
+
+        </article>
+
+        `;
+
+      }).join("");
+
   }
 
 
-  function createLongtermCard(stock) {
+  /*
+  =====================================================
+  長期ランキング表示
+  =====================================================
+  */
 
-    return `
-      <article class="card ${cardClass(stock.rank)}">
+  function renderLongterm(data) {
 
-        <div class="card-head">
-
-          <div class="rank ${rankClass(stock.rank)}">
-            ${rankIcon(stock.rank)}
-          </div>
-
-          <div class="company">
-
-            <div class="company-name">
-              ${escapeHtml(stock.name)}
-            </div>
-
-            <div class="code">
-              ${escapeHtml(stock.code)} /
-              ${escapeHtml(stock.symbol)}
-            </div>
-
-          </div>
+    const container =
+      document.getElementById("longtermCards");
 
 
-          <div class="score-box">
+    if (
+      !Array.isArray(data) ||
+      data.length === 0
+    ) {
 
-            <div class="score-label">
-              AI SCORE
+      container.innerHTML = `
+        <div class="error-box">
+          長期ランキングがありません。
+        </div>
+      `;
+
+      return;
+    }
+
+
+    container.innerHTML =
+      data.map(stock => {
+
+        const signal =
+          getSignal(stock.score, "longterm");
+
+
+        return `
+
+        <article
+          class="card ${cardClass(stock.rank)}"
+        >
+
+          <div class="rank-row">
+
+            <div
+              class="rank ${rankClass(stock.rank)}"
+            >
+              ${rankIcon(stock.rank)}
             </div>
 
             <div class="score">
-              ${numberFormat(stock.score)}
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div class="price">
-          ¥${numberFormat(stock.price)}
-          <span>現在値</span>
-        </div>
-
-
-        <div class="metrics">
-
-          <div class="metric">
-
-            <div class="metric-name">
-              6か月
-            </div>
-
-            <div class="metric-value ${percentClass(stock.sixMonth)}">
-              ${signedPercent(stock.sixMonth)}
+              AI SCORE
+              ${formatNumber(stock.score)}
             </div>
 
           </div>
 
 
-          <div class="metric">
+          <div class="stock-name">
+            ${stock.name}
+          </div>
 
-            <div class="metric-name">
-              1か月
-            </div>
+          <div class="stock-code">
+            ${stock.code}
+            /
+            ${stock.symbol}
+          </div>
 
-            <div class="metric-value ${percentClass(stock.oneMonth)}">
-              ${signedPercent(stock.oneMonth)}
-            </div>
+
+          <div class="price">
+
+            ¥${formatNumber(stock.price)}
+
+            <small>
+              現在値
+            </small>
 
           </div>
 
 
-          <div class="metric">
+          <div class="metrics">
 
-            <div class="metric-name">
-              20日移動平均
+
+            <div class="metric">
+
+              <div class="metric-label">
+                6か月
+              </div>
+
+              <div
+                class="metric-value
+                ${valueClass(stock.sixMonth)}"
+              >
+                ${formatPercent(stock.sixMonth)}
+              </div>
+
             </div>
 
-            <div class="metric-value">
-              ¥${numberFormat(stock.ma20)}
+
+            <div class="metric">
+
+              <div class="metric-label">
+                1か月
+              </div>
+
+              <div
+                class="metric-value
+                ${valueClass(stock.oneMonth)}"
+              >
+                ${formatPercent(stock.oneMonth)}
+              </div>
+
             </div>
+
+
+            <div class="metric">
+
+              <div class="metric-label">
+                20日移動平均
+              </div>
+
+              <div class="metric-value">
+                ¥${formatNumber(stock.ma20)}
+              </div>
+
+            </div>
+
+
+            <div class="metric">
+
+              <div class="metric-label">
+                60日移動平均
+              </div>
+
+              <div class="metric-value">
+                ¥${formatNumber(stock.ma60)}
+              </div>
+
+            </div>
+
 
           </div>
 
 
-          <div class="metric">
+          <div
+            class="signal ${signal.className}"
+          >
+            ${signal.text}
+          </div>
 
-            <div class="metric-name">
-              60日移動平均
-            </div>
 
-            <div class="metric-value">
-              ¥${numberFormat(stock.ma60)}
-            </div>
+          <div class="reason">
+
+            <strong>選定理由</strong><br>
+
+            ${stock.reason || "総合評価"}
 
           </div>
 
-        </div>
 
+        </article>
 
-        <div class="reason">
+        `;
 
-          <div class="reason-title">
-            AI選定理由
-          </div>
+      }).join("");
 
-          ${escapeHtml(stock.reason)}
-
-        </div>
-
-      </article>
-    `;
   }
 
 
-  function escapeHtml(value) {
-
-    return String(value ?? "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-  }
-
+  /*
+  =====================================================
+  データ取得
+  =====================================================
+  */
 
   async function loadData() {
 
-    const status =
-      document.getElementById("status");
+    const connection =
+      document.getElementById("connectionStatus");
 
-    const updated =
-      document.getElementById("updated");
 
-    const button =
-      document.getElementById("reloadButton");
+    connection.textContent =
+      "● データ更新中";
 
-    button.disabled = true;
-
-    status.textContent =
-      "🔄 データ更新中...";
-
-    status.className =
+    connection.className =
       "status";
+
 
     try {
 
-      // キャッシュ対策
+      /*
+      キャッシュ防止用パラメータ
+      */
+
       const url =
         API_URL +
         "?t=" +
@@ -810,8 +1053,7 @@
       if (!response.ok) {
 
         throw new Error(
-          "HTTPエラー " +
-          response.status
+          `HTTP ${response.status}`
         );
 
       }
@@ -825,76 +1067,44 @@
 
         throw new Error(
           data.message ||
-          "APIからエラーが返されました"
+          "APIステータスエラー"
         );
 
       }
 
 
-      const daytrade =
-        Array.isArray(data.daytrade)
-          ? data.daytrade
-          : [];
+      renderDaytrade(
+        data.daytrade || []
+      );
 
 
-      const longterm =
-        Array.isArray(data.longterm)
-          ? data.longterm
-          : [];
-
-
-      document
-        .getElementById("daytradeRanking")
-        .innerHTML =
-        daytrade.length
-          ? daytrade
-              .map(createDaytradeCard)
-              .join("")
-          : `
-            <div class="loading">
-              デイトレデータがありません
-            </div>
-          `;
+      renderLongterm(
+        data.longterm || []
+      );
 
 
       document
-        .getElementById("longtermRanking")
-        .innerHTML =
-        longterm.length
-          ? longterm
-              .map(createLongtermCard)
-              .join("")
-          : `
-            <div class="loading">
-              長期データがありません
-            </div>
-          `;
+        .getElementById("notice")
+        .textContent =
+          data.notice ||
+          "ランキングは参考情報です。";
 
 
-      if (data.notice) {
-
-        document
-          .getElementById("notice")
-          .textContent =
-          data.notice;
-
-      }
+      document
+        .getElementById("updatedStatus")
+        .textContent =
+          `更新時刻：${data.updated || "--"}`;
 
 
-      status.textContent =
-        "🟢 API接続OK";
+      connection.textContent =
+        "● 接続正常";
 
-
-      status.className =
+      connection.className =
         "status ok";
 
 
-      updated.textContent =
-        "データ更新 " +
-        (
-          data.updated ||
-          new Date().toLocaleString("ja-JP")
-        );
+      countdown =
+        REFRESH_SECONDS;
 
 
     } catch (error) {
@@ -902,57 +1112,82 @@
       console.error(error);
 
 
-      status.textContent =
-        "🔴 データ取得エラー";
+      connection.textContent =
+        "● データ取得失敗";
 
-
-      status.className =
+      connection.className =
         "status error";
 
 
-      updated.textContent =
-        error.message;
-
-
       document
-        .getElementById("daytradeRanking")
+        .getElementById("daytradeCards")
         .innerHTML = `
-          <div class="loading">
+
+          <div class="error-box">
+
             データを取得できませんでした。<br><br>
-            ${escapeHtml(error.message)}
+
+            ${error.message}
+
           </div>
+
         `;
 
 
       document
-        .getElementById("longtermRanking")
+        .getElementById("longtermCards")
         .innerHTML = `
-          <div class="loading">
-            データを取得できませんでした。
+
+          <div class="error-box">
+
+            データを取得できませんでした。<br><br>
+
+            ${error.message}
+
           </div>
+
         `;
-
-    } finally {
-
-      button.disabled = false;
 
     }
 
   }
 
 
-  // 最初に取得
+  /*
+  =====================================================
+  1秒ごとのカウントダウン
+  =====================================================
+  */
+
+  setInterval(() => {
+
+    countdown--;
+
+    if (countdown <= 0) {
+
+      countdown =
+        REFRESH_SECONDS;
+
+      loadData();
+
+    }
+
+
+    document
+      .getElementById("countdownStatus")
+      .textContent =
+        `次回更新：${countdown}秒`;
+
+  }, 1000);
+
+
+  /*
+  =====================================================
+  初回読み込み
+  =====================================================
+  */
+
   loadData();
-
-
-  // ==============================
-  // 1分ごとに自動更新
-  // ==============================
-
-  setInterval(
-    loadData,
-    UPDATE_INTERVAL
-  );
 
 </script>
 
